@@ -1,0 +1,141 @@
+@import "tailwindcss";
+
+body {
+  @apply antialiased pb-20;
+  font-family: "Libre Caslon Display";
+  background-color: hsla(293, 100%, 89%, 1);
+  background-image: radial-gradient(
+      at 14% 15%,
+      hsla(289, 100%, 79%, 1) 0px,
+      transparent 50%
+    ),
+    radial-gradient(at 99% 99%, hsla(264, 100%, 72%, 1) 0px, transparent 50%),
+    radial-gradient(at 45% 81%, hsla(355, 0%, 100%, 1) 0px, transparent 50%),
+    url("/grain.png");
+}
+
+/* Area style */
+.area {
+  @apply pt-20;
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+  position: absolute;
+  top: 150px;
+  left: 0;
+  right: 0;
+  transition: 500ms;
+}
+
+.area.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+/* Book part */
+.book-container {
+  @apply flex items-center justify-center gap-16;
+}
+
+.book {
+  @apply relative transition-transform duration-500;
+  height: 550px;
+  width: 400px;
+}
+
+.paper {
+  @apply absolute w-full h-full top-0 left-0;
+  perspective: 1500px;
+}
+
+.front,
+.back {
+  @apply bg-stone-50 text-stone-700 absolute w-full h-full top-0 left-0 origin-left transition-transform duration-500;
+  background-image: url("/grain-black.png");
+}
+
+.front.cover,
+.back.cover {
+  @apply bg-pink-800 shadow-[inset_-4px_-10px_5px_0_rgb(131_24_67/0.2),inset_-4px_6px_5px_0_rgb(251_207_232/0.2)] text-white;
+  background-image: url("/leather.png");
+}
+
+.front {
+  z-index: 1;
+  backface-visibility: hidden;
+}
+
+.front:not(.cover) {
+  @apply shadow-[inset_6px_0_20px_-10px_rgba(0,0,0,0.1),inset_2px_0_10px_-8px_rgba(0,0,0,0.2)];
+}
+
+.back:not(.cover) {
+  @apply shadow-[inset_6px_0_20px_-10px_rgba(0,0,0,0.1),inset_2px_0_10px_-8px_rgba(0,0,0,0.2)];
+}
+
+.back {
+  z-index: 0;
+}
+
+.front-content,
+.back-content {
+  @apply w-full h-full p-6;
+}
+
+.back-content {
+  transform: rotateY(180deg);
+}
+
+.flipped .front,
+.flipped .back {
+  transform: rotateY(-180deg);
+}
+
+.arrow-btn {
+  @apply text-2xl text-pink-800/60 drop-shadow-sm hover:text-pink-900 transition-transform duration-500;
+}
+
+.area-btn.active-link {
+  @apply text-white;
+}
+
+/* stack order */
+#p1 {
+  z-index: 3;
+}
+
+#p2 {
+  z-index: 2;
+}
+
+#p3 {
+  z-index: 1;
+}
+
+.para:not(.no-big)::first-letter {
+  @apply text-4xl font-bold mr-2;
+  initial-letter: 4;
+}
+
+.para {
+  @apply font-['Noto_Serif'] leading-5 text-justify;
+}
+
+.anim-cake {
+  animation: cake 4s infinite;
+}
+
+@keyframes cake {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(20px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
